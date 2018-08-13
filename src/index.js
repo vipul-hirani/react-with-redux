@@ -31,7 +31,7 @@ const allStoreEnhancers = compose(
 const store = createStore(
   allReducer, {
     products: JsonData,
-    cart: Helper.getLocalStorageData('cartData')
+    cart: Helper.getLocalStorageData('cartData') ? Helper.getLocalStorageData('cartData') : []
   },
   allStoreEnhancers
 );
