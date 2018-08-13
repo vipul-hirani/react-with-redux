@@ -74,8 +74,7 @@ class Home extends Component {
   };
 
   handleSubmit = (data, index) => {
-    const cartData = this.props.cart;
-    // const cartData = Helpers.getLocalStorageData('cartData');
+    const cartData = [ ...this.props.cart ];
     const findProData = _.findWhere(cartData, {id: data.id});
     if (findProData) {
       let index = _.indexOf(_.pluck(cartData, 'id'), findProData.id);
@@ -125,7 +124,6 @@ class Home extends Component {
                 <Row>
                   {this.props.products[this.state.activeTab].filter.size.map((value, key) => {
                     return (
-                      //<Col span={8} key={key}><Checkbox value={value}>{value}</Checkbox></Col>
                       <Col span={8} key={key}><Checkbox value={value} className="checkbox-custom"/><span>{value}</span></Col>
                     )
                   })}
