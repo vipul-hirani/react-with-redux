@@ -8,6 +8,8 @@ import {createSelector} from 'reselect'
 
 const Home = asyncComponent(() => import('./pages/Home/Home').then(module => module.default));
 const Cart = asyncComponent(() => import('./pages/Cart/Cart').then(module => module.default));
+const Login = asyncComponent(() => import('./pages/Login/Login').then(module => module.default));
+
 
 class App extends Component {
 
@@ -19,6 +21,7 @@ class App extends Component {
           <Header {...this.props}/>
           <Switch>
             <Route exact path="/" component={Home}/>
+            <Route exact path="/login" component={Login}/>
             <Route exact path="/cart"  component={Cart}/>
           </Switch>
         </div>
@@ -37,12 +40,19 @@ const cartSelector = createSelector(
   cart => cart,
 );
 
+const userSelector = createSelector(
+  state => state.user,
+  user => user,
+);
+
 const mapStateToProps = createSelector(
   productSelector,
   cartSelector,
-  (products, cart) => ({
+  userSelector,
+  (products, cart, user) => ({
     products ,
-    cart
+    cart,
+    user
   })
 );
 export default connect(mapStateToProps)(App);

@@ -9,12 +9,15 @@ import shoppingCart from "../../assets/images/shopping_cart.png";
 import {connect} from "react-redux";
 import {createSelector} from "reselect";
 import {updateCart} from "../../actions/cart-action";
+import {Redirect} from "react-router";
+
 
 class Cart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sub_total: 0
+      sub_total: 0,
+      cart_check_out : false
     };
   }
 
@@ -22,7 +25,7 @@ class Cart extends React.Component {
     this.cartCalculation()
   }
 
-  cartCalculation(){
+  cartCalculation() {
     let subtotal = 0;
     this.props.cart.map((value) =>
       subtotal += (value.qty * value.price)
@@ -63,14 +66,21 @@ class Cart extends React.Component {
     });
     Helper.setLocalStorageData('cartData', cartData);
     this.props.onCartUpdate(cartData);
-    setTimeout(()=>{
+    setTimeout(() => {
       this.cartCalculation();
     })
   }
 
 
+  checkOut = () => {
+    this.setState({
+      cart_check_out:true
+    })
+  }
+
 
   render() {
+
     return (
       <div className="shopping-cart">
         <div className="title">
@@ -105,6 +115,16 @@ class Cart extends React.Component {
             <div className="item">
               <div className="sub-total-price"><b>SubTotal({this.props.cart.length} items):
                 ${(this.state.sub_total).toFixed(2)}</b></div>
+            </div>
+            <div className="item">
+              <div className="sub-total-price"><b>
+                <button onClick={this.checkOut}>
+                  Check Out
+                </button>
+                {this.state.cart_check_out && (
+                  <Redirect to={'/login'}/>
+                )}
+              </b></div>
             </div>
           </Then>
           <ElseIf condition={this.props.cart.length === 0 || !this.props.cart}>

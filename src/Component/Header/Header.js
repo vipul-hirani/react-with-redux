@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 
 class Header extends Component {
   render() {
-    // console.log(this.props.cart);
+
     return (
       <div className="ban-top">
         <div className="container">
@@ -14,6 +14,9 @@ class Header extends Component {
                   <li className="active menu__item menu__item--current">
                     <NavLink className="menu__link" to="/">Home
                       <span className="sr-only">(current)</span></NavLink>
+                  </li>
+                  <li className="menu__item ">
+                    <NavLink className="menu__link" to="/login">Login</NavLink>
                   </li>
                 </ul>
               </div>
@@ -31,6 +34,7 @@ class Header extends Component {
                 <i className="fa fa-cart-arrow-down" aria-hidden="true"/></button>
             </NavLink>
           </div>
+          {this.props.user.name}
         </div>
         </div>
         <div className="clearfix"/>

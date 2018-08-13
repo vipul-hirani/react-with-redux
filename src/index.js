@@ -11,6 +11,7 @@ import {Provider} from "react-redux";
 import registerServiceWorker from './registerServiceWorker';
 import cartReducer from './reducer/cart-reducer'
 import productReducer from './reducer/product-reducer'
+import userReducer from './reducer/user-reducer'
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux'
 import JsonData from "./service/jsondata";
 import thunk from "redux-thunk";
@@ -18,7 +19,8 @@ import Helper from "./service/Helpers";
 
 const allReducer = combineReducers({
   products: productReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  user: userReducer
 });
 
 
@@ -31,7 +33,8 @@ const allStoreEnhancers = compose(
 const store = createStore(
   allReducer, {
     products: JsonData,
-    cart: Helper.getLocalStorageData('cartData') ? Helper.getLocalStorageData('cartData') : []
+    cart: Helper.getLocalStorageData('cartData') ? Helper.getLocalStorageData('cartData') : [],
+    user: Helper.getLocalStorageData('USER') ? Helper.getLocalStorageData('USER') : [],
   },
   allStoreEnhancers
 );
