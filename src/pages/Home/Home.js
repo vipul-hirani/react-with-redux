@@ -3,7 +3,6 @@ import InputRange from 'react-input-range';
 import _ from 'underscore';
 import 'react-input-range/lib/css/index.css'
 import {Checkbox, Row, Col} from 'antd';
-// import 'jquery-ui/ui/effects/effect-slide';
 import Helpers from "../../service/Helpers";
 import {connect} from "react-redux";
 import {updateCart} from "../../actions/cart-action";
@@ -28,6 +27,7 @@ class Home extends Component {
       footwearData: this.props.products.footwearData.data,
       bagsData: this.props.products.bagsData.data,
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   selectedTab(key) {
@@ -73,37 +73,16 @@ class Home extends Component {
     });
   };
 
-  handleSubmit (data, index) {
-    let that = this;
-    console.log(data, index);
-    const array = [];
-    array.push(data);
-    let {cart} = this.props;
-    console.log(cart);
-    let cartData = cart;
-    const findManData = _.findWhere(cartData, {id: data.id});
-    if (findManData) {
-      for (let i = 0; i < cartData.length; i++) {
-        if (data.id === cartData[i].id) {
-          cartData[i].qty += 1;
-          break;
-        }
-      }
-      this.props.onCartUpdate(cartData);
-      Helpers.setLocalStorageData('cartData', cartData);
-
-
+  handleSubmit = (data, index) => {
+    const cartData = this.props.cart;
+    // const cartData = Helpers.getLocalStorageData('cartData');
+    const findProData = _.findWhere(cartData, {id: data.id});
+    if (findProData) {
+      let index = _.indexOf(_.pluck(cartData, 'id'), findProData.id);
+      cartData[index].qty += 1;
     } else {
-      if (cartData) {
-        cartData.push(array[0]);
-        Helpers.setLocalStorageData('cartData', cartData);
-      } else {
-        Helpers.setLocalStorageData('cartData', array);
-      }
-      this.props.onCartUpdate(cartData);
-
+      cartData.push(data);
     }
-
     let imgtodrag = document.getElementsByClassName('product-men')[index];
     let imgtodragImage = imgtodrag.querySelector('.pro-image-front');
 
@@ -111,8 +90,7 @@ class Home extends Component {
     let disTop = imgtodrag.getBoundingClientRect().top;
     let image = imgtodragImage.cloneNode(true);
 
-    let imageStyle = 'z-index: 1111; width: 100px;opacity:0.5; position:fixed; top:' + disTop + 'px;left:' + disLeft + 'px;transition: left 2s, top 2s, width 2s, opacity 2s cubic-bezier(1, 1, 1, 1)';
-    image.style = imageStyle;
+    image.style = 'z-index: 1111; width: 100px;opacity:0.5; position:fixed; top:' + disTop + 'px;left:' + disLeft + 'px;transition: left 2s, top 2s, width 2s, opacity 2s cubic-bezier(1, 1, 1, 1)';
     document.body.appendChild(image);
 
     setTimeout(function () {
@@ -121,7 +99,9 @@ class Home extends Component {
       image.style.width = '40px';
       image.style.opacity = '0';
     }, 200);
-  }
+    this.props.onCartUpdate(cartData);
+    Helpers.setLocalStorageData('cartData', cartData);
+  };
 
   render() {
     return (
@@ -138,7 +118,7 @@ class Home extends Component {
               />
             </div>
             <div className='col-md-12' style={{marginTop: 20}}>
-              <hr></hr>
+              <hr/>
               <b>Size</b></div>
             <div className='col-md-12' style={{marginTop: 10}}>
               <Checkbox.Group defaultValue={[]} style={{width: '100%'}} onChange={this.sizeFilter}>
@@ -156,7 +136,7 @@ class Home extends Component {
             {this.props.products[this.state.activeTab].filter.company && (
               <div>
                 <div className='col-md-12' style={{marginTop: 0}}>
-                  <hr></hr>
+                  <hr/>
                   <b>Price</b></div>
                 <div className='col-md-12' style={{marginTop: 15}}>
                   <Checkbox.Group defaultValue={[]} style={{width: '100%'}} onChange={this.sizeFilter}>
@@ -180,7 +160,7 @@ class Home extends Component {
             {this.props.products[this.state.activeTab].filter.color && (
               <div>
                 <div className='col-md-12' style={{marginTop: 0}}>
-                  <hr></hr>
+                  <hr/>
                   <b>Color</b></div>
                 <div className='col-md-12' style={{marginTop: 15}}>
                   <Checkbox.Group defaultValue={[]} style={{width: '100%'}} onChange={this.sizeFilter}>
@@ -197,7 +177,6 @@ class Home extends Component {
                           )
                         })
                       }
-
                       <Col className="col-sm-6"><span className="show-more">+ More</span></Col>
                     </div>
                   </Checkbox.Group>

@@ -23,7 +23,7 @@ const ProductDesign = ({addToCart, productData}) => (
               className="snipcart-details top_brand_home_details item_add single-item hvr-outline-out button2">
               <fieldset>
                 <input type="submit" name="submit" defaultValue="Add to cart"
-                       className=" button add-to-cart" onClick={(values) => addToCart(value, key)}/>
+                       className=" button add-to-cart" onClick={() => addToCart(value, key)}/>
               </fieldset>
             </div>
           </div>

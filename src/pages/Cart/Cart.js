@@ -16,7 +16,6 @@ class Cart extends React.Component {
     this.state = {
       sub_total: 0
     };
-    this.updateClose = this.updateClose.bind(this);
   }
 
   componentDidMount() {

@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 
 class Header extends Component {
   render() {
-    console.log(this.props.cart.length);
+    // console.log(this.props.cart);
     return (
       <div className="ban-top">
         <div className="container">
