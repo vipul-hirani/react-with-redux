@@ -76,7 +76,7 @@ class Cart extends React.Component {
     this.setState({
       cart_check_out:true
     })
-  }
+  };
 
 
   render() {

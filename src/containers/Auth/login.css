@@ -1,0 +1,22 @@
+
+.social-login {
+    width: 950px;
+    height: auto;
+    margin: 80px auto;
+    background: #FFFFFF;
+    box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.10);
+    border-radius: 6px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.facebook-btn {
+    text-align: center;
+    margin: 0 0 30px 0;
+}
+
+.google-btn {
+    text-align: center;
+    margin: 0 0 30px 0;
+}

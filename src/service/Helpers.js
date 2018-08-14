@@ -25,7 +25,7 @@ let Helpers = {
     return JSON.parse(localStorage.getItem(key));
   },
   removeLocalStorageData: (key) => {
-    return localStorage.removeItem(key);;
+    return localStorage.removeItem(key);
   },
 };
 

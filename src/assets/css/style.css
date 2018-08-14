@@ -4170,4 +4170,6 @@ input[type="radio"], input[type="checkbox"]{
 .ant-checkbox-input{
     display: none;
 }
-
+.user-name{
+    color: white;
+}

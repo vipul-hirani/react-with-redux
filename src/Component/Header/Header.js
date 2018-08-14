@@ -15,9 +15,19 @@ class Header extends Component {
                     <NavLink className="menu__link" to="/">Home
                       <span className="sr-only">(current)</span></NavLink>
                   </li>
-                  <li className="menu__item ">
-                    <NavLink className="menu__link" to="/login">Login</NavLink>
-                  </li>
+                  {
+                    !this.props.user.first_name &&
+                    <li className="menu__item ">
+                      <NavLink className="menu__link" to="/login">Login</NavLink>
+                    </li>
+                  }
+                  {
+                    this.props.user.first_name &&
+                    <li className="menu__item ">
+                      <NavLink className="menu__link" to="/logout">Logout</NavLink>
+                    </li>
+                  }
+
                 </ul>
               </div>
 
@@ -25,8 +35,10 @@ class Header extends Component {
         </div>
         <div className="top_nav_right">
           <div className="wthreecartaits wthreecartaits2 cart cart box_1">
-              <span className="numberCircle">{this.props.cart.length}</span>
+            <span className='user-name'>{this.props.user.first_name}</span>
+            {/*<img src={this.props.user.image_url}/>*/}
 
+            <span className="numberCircle">{this.props.cart.length}</span>
             <NavLink to="/cart" className="last">
               <input type="hidden" name="cmd" defaultValue="_cart"/>
               <input type="hidden" name="display" defaultValue={1}/>
@@ -34,7 +46,7 @@ class Header extends Component {
                 <i className="fa fa-cart-arrow-down" aria-hidden="true"/></button>
             </NavLink>
           </div>
-          {this.props.user.name}
+
         </div>
         </div>
         <div className="clearfix"/>

@@ -6,23 +6,24 @@ import asyncComponent from './service/AsyncComponent';
 import {connect} from 'react-redux';
 import {createSelector} from 'reselect'
 
-const Home = asyncComponent(() => import('./pages/Home/Home').then(module => module.default));
-const Cart = asyncComponent(() => import('./pages/Cart/Cart').then(module => module.default));
-const Login = asyncComponent(() => import('./pages/Login/Login').then(module => module.default));
+const Home = asyncComponent(() => import('./containers/Home/Home').then(module => module.default));
+const Cart = asyncComponent(() => import('./containers/Cart/Cart').then(module => module.default));
+const Auth = asyncComponent(() => import('./containers/Auth/Auth').then(module => module.default));
+const Logout = asyncComponent(() => import('./containers/Auth/Logout').then(module => module.default));
 
 
 class App extends Component {
 
   render() {
-    console.log(this.props.cart.length);
     return (
       <BrowserRouter>
         <div>
           <Header {...this.props}/>
           <Switch>
             <Route exact path="/" component={Home}/>
-            <Route exact path="/login" component={Login}/>
-            <Route exact path="/cart"  component={Cart}/>
+            <Route exact path="/login" component={Auth}/>
+            <Route exact path="/cart" component={Cart}/>
+            <Route exact path="/logout" component={Logout}/>
           </Switch>
         </div>
       </BrowserRouter>
@@ -50,7 +51,7 @@ const mapStateToProps = createSelector(
   cartSelector,
   userSelector,
   (products, cart, user) => ({
-    products ,
+    products,
     cart,
     user
   })
